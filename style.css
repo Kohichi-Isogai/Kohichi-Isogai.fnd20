@@ -1,0 +1,96 @@
+body{
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 100px;
+}
+
+h1{
+
+  font-size: 200%;
+  text-align: center;
+}
+
+h2{
+  margin-top: 40px;
+  margin-bottom: 20px;
+  background: rgb(172, 172, 172);
+}
+
+h3{
+  margin-left: 50px;
+  margin-top: 0px;
+  background: rgb(219, 219, 219);
+}
+
+.pagePosition{
+  text-align: right;
+}
+
+
+.othelloLink{
+  font-weight: bold;
+  font-size: 200%;
+  margin-left: 150px;
+
+}
+
+.profile{
+  display: flex;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+.item{
+  width: 180px;
+  margin-left: 50px;
+}
+
+.data{
+  margin: 0px;
+}
+
+
+.othelloPicture{
+  margin-right: 2%;
+  width: 400px;
+}
+
+.topHeader{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.othelloPosition{
+  margin-left: 8%;
+  margin-bottom: 20px;
+}
+
+.othelloConfPicture{
+  border : 2px solid black;
+  width: 500px;
+
+}
+
+.learnedInfo{
+  display: flex;
+  margin-bottom: 20px;
+  font-size: 120%;
+
+}
+
+
+.topic{
+  margin-top: 20px;
+  margin-left: 8%;
+  margin-bottom: 20px;
+  font-weight: bold;
+
+}
+
+.text{
+  margin-left: 30px;
+
+}
+
