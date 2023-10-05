@@ -4,13 +4,18 @@ body {
 }
 
 h1{
-  color: blue;
+  font-size: 500%;
 }
 
 p{
   font-size: 200%;
 }
 
+ol{
+  font-size: 200%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
 
 .ver{
   font-size: 50%;
@@ -19,7 +24,7 @@ p{
 }
 
 .explanation{
-  clear: right;
+  font-size: 150%;
 }
 
 .turn{
