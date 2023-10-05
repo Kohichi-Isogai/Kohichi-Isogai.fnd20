@@ -1,0 +1,77 @@
+body {
+  font-size: 50%;
+  text-align: center;
+}
+
+h1{
+  color: blue;
+}
+
+p{
+  font-size: 200%;
+}
+
+
+.ver{
+  font-size: 50%;
+  position: fixed;
+  bottom: 0;
+}
+
+.explanation{
+  clear: right;
+}
+
+.turn{
+  font-weight: bold;
+  width: 22px; /*42px*/
+  height: 22px; /*42px*/
+  padding: 12px 12px 8px 8px; /*余白 削除*/
+  font-size: 150%;
+  background: white;
+  color: black;
+  border-radius: 50%;
+  border : 2px solid black;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.cell{
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  background: rgb(37, 155, 37);
+  color: white;
+  margin: -1px;
+
+}
+
+.stone{
+  width: 42px;
+  height: 42px;
+  background: rgb(37, 155, 37);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+
+.reset{
+  transform: translateX(-50%);
+  margin: 5px;
+  margin-left: 420px;
+  width: 150px;
+  height: 50px;
+}
