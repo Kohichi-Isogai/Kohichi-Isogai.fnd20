@@ -494,7 +494,6 @@ function oneMoreTurnCheck(inTrunChangeCount,inStoneAry,inCellData,inStoneData,in
     }
     inStoneAry.forEach((column,i) => column.forEach((cell,j) => {
       if(cell === 3){
-        console.log("in");
         leftReversedCheck(inCellData,inStoneData,i,j);
         rightReversedCheck(inCellData,inStoneData,i,j);
         upReversedCheck(inCellData,inStoneData,i,j);
