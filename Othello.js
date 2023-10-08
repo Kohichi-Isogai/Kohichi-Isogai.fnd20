@@ -25,16 +25,15 @@ if(firstRun){
     const column = document.createElement("div");
     column.classList.add("container");
     for (let j = 0; j <= 7; j++) {
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-      cell.setAttribute("onclick", `clickDisplayAlert(${i},${j})`);
+      const Square = document.createElement("div");
+      Square.classList.add("cell");
+      Square.setAttribute("onclick", `clickDisplayAlert(${i},${j})`);
       const Stone = document.createElement("div");
       Stone.classList.add("stone");
       // Stone.innerText = `${i},${j}`;
       // Stone.style.color = "aqua";
-      Stone.setAttribute("onclick", `clickDisplayAlert(${i},${j})`);
-      cell.appendChild(Stone);
-      column.appendChild(cell);
+      Square.appendChild(Stone);
+      column.appendChild(Square);
     }
     row.appendChild(column);
   }
@@ -455,7 +454,6 @@ function rightDownReversedCheck(inItemData,inStoneData,inX,inY){
   }
 }
 
-
 function leftDownReversedCheck(inItemData,inStoneData,inX,inY){
   let count = 0;
   let checkingX = inX + 1;
@@ -481,7 +479,9 @@ function leftDownReversedCheck(inItemData,inStoneData,inX,inY){
 function oneMoreTurnCheck(inTrunChangeCount,inStoneAry,inCellData,inStoneData,inTurnData){
 
   if(inTrunChangeCount === 64){
-    document.body.getElementsByClassName("oneMore")[0].style.visibility = "visible";
+    const oneMoreData = document.body.getElementsByClassName("oneMore")[0];
+    oneMoreData.style.visibility = "visible"
+
     if(mySotne === white){
       mySotne = black;
       opponentSotne = white;
@@ -495,6 +495,7 @@ function oneMoreTurnCheck(inTrunChangeCount,inStoneAry,inCellData,inStoneData,in
     }
     inStoneAry.forEach((column,i) => column.forEach((cell,j) => {
       if(cell === 3){
+        console.log("in");
         leftReversedCheck(inCellData,inStoneData,i,j);
         rightReversedCheck(inCellData,inStoneData,i,j);
         upReversedCheck(inCellData,inStoneData,i,j);
@@ -513,8 +514,9 @@ function clickDisplayAlert(x, y) {
   const cell = x * 8 + y;
   const stoneData = document.querySelectorAll(".stone");
   const cellData = document.querySelectorAll(".cell");
-
-  document.body.getElementsByClassName("oneMore")[0].style.visibility = "hidden";
+    
+  const oneMoreData = document.body.getElementsByClassName("oneMore")[0];
+  oneMoreData.style.visibility = "hidden"
 
   if(stoneData[cell].style.background === validCellColor){
     turnCount++;
@@ -589,7 +591,36 @@ function clickDisplayAlert(x, y) {
       }
     });
 
-    oneMoreTurnCheck(trunChangeCount,stoneAry,cellData,stoneData,turnData);
+    // oneMoreTurnCheck(trunChangeCount,stoneAry,cellData,stoneData,turnData);
+
+    if(trunChangeCount === 64){
+      oneMoreData.style.visibility = "visible";
+      if(mySotne === white){
+        mySotne = black;
+        opponentSotne = white;
+        turnData[0].style.background = black;
+        turnData[0].style.color = white;
+      } else {
+        mySotne = white;
+        opponentSotne = black;
+        turnData[0].style.background = white;
+        turnData[0].style.color = black;
+      }
+      stoneAry.forEach((column,i) => column.forEach((cell,j) => {
+        if(cell === 3){
+          console.log("in");
+          leftReversedCheck(cellData,stoneData,i,j);
+          rightReversedCheck(cellData,stoneData,i,j);
+          upReversedCheck(cellData,stoneData,i,j);
+          downReversedCheck(cellData,stoneData,i,j);
+          leftUpReversedCheck(cellData,stoneData,i,j);
+          rightUpReversedCheck(cellData,stoneData,i,j);
+          leftDownReversedCheck(cellData,stoneData,i,j);
+          rightDownReversedCheck(cellData,stoneData,i,j);
+        }
+      }));
+      
+    }
 
     let whiteCount = 0;
     let blackCount = 0;
@@ -602,7 +633,7 @@ function clickDisplayAlert(x, y) {
     }));
 
     if(turnCount === 60 || whiteCount === 0 || blackCount === 0){
-      document.body.getElementsByClassName("oneMore")[0].style.visibility = "hidden";
+      oneMoreData.style.visibility = "hidden";
       let OthelloResult = "";
       if(whiteCount > blackCount){
         OthelloResult = "○白の勝ち！！！";
