@@ -25,15 +25,16 @@ if(firstRun){
     const column = document.createElement("div");
     column.classList.add("container");
     for (let j = 0; j <= 7; j++) {
-      const Square = document.createElement("div");
-      Square.classList.add("cell");
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.setAttribute("onclick", `clickDisplayAlert(${i},${j})`);
       const Stone = document.createElement("div");
       Stone.classList.add("stone");
       // Stone.innerText = `${i},${j}`;
       // Stone.style.color = "aqua";
       Stone.setAttribute("onclick", `clickDisplayAlert(${i},${j})`);
-      Square.appendChild(Stone);
-      column.appendChild(Square);
+      cell.appendChild(Stone);
+      column.appendChild(cell);
     }
     row.appendChild(column);
   }
