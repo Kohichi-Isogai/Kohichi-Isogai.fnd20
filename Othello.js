@@ -504,7 +504,7 @@ function oneMoreTurnCheck(inTrunChangeCount,inStoneAry,inCellData,inStoneData,in
         leftDownReversedCheck(inCellData,inStoneData,i,j);
         rightDownReversedCheck(inCellData,inStoneData,i,j);
       }
-    }))
+    }));
     
   }
 }
@@ -553,7 +553,7 @@ function clickDisplayAlert(x, y) {
           }
         }
       }
-    }))
+    }));
 
     const turnData = document.querySelectorAll(".turn");
 
@@ -580,7 +580,7 @@ function clickDisplayAlert(x, y) {
         leftDownReversedCheck(cellData,stoneData,i,j);
         rightDownReversedCheck(cellData,stoneData,i,j);
       }
-    }))
+    }));
     
     let trunChangeCount = 0;
     cellData.forEach((cell) => {
@@ -599,7 +599,7 @@ function clickDisplayAlert(x, y) {
       } else if(stoneAry[i][j] === 2){
         blackCount++;
       }
-    }))
+    }));
 
     if(turnCount === 60 || whiteCount === 0 || blackCount === 0){
       document.body.getElementsByClassName("oneMore")[0].style.visibility = "hidden";
