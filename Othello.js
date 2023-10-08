@@ -1,12 +1,15 @@
 'use strict'
 // 1行目に記載している 'use strict' は削除しないでください
 
-
 const black = "rgb(0, 0, 0)"
 const white = "rgb(255, 255, 255)"
 const noValidCellColor = "rgb(37, 155, 37)";
 const validCellColor = "rgb(247, 247, 131)";
 const blackBorder = "2px solid black";
+
+const adjustColumnCoordAry = [-1, -1, -1,  0, 0,  1, 1, 1];
+const adjustRowCoordAry =    [-1,  0, 1, -1, 1, -1, 0, 1];
+const initValidCellAry = [20, 29, 34, 43];
 
 let mySotne = white;
 let opponentSotne = black;
@@ -31,7 +34,6 @@ if(firstRun){
       Stone.setAttribute("onclick", `clickDisplayAlert(${i},${j})`);
       Square.appendChild(Stone);
       column.appendChild(Square);
-
     }
     row.appendChild(column);
   }
@@ -49,8 +51,7 @@ if(firstRun){
   })
 
   const cellData = document.querySelectorAll(".cell");
-  const validCellAry = [20, 29, 34, 43];
-  validCellAry.forEach((cell) => {
+  initValidCellAry.forEach((cell) => {
     cellData[cell].style.background = validCellColor;
     stoneData[cell].style.background = validCellColor;
   })
@@ -59,68 +60,6 @@ if(firstRun){
 
   firstRun = false
 }
-
-
-
-
-
-
-
-
-function leftOrUpReversed(inStoneData,direction,inX,inY){
-  let count = 0;
-  let isReversed = false;
-  let checkIndex = 0;
-  let stoneBackgColor = "";
-  let adjustmentI = 0;
-
-  if(direction === "up"){
-    checkIndex = inX;
-    adjustmentI = -1;
-  } else if (direction === "left") {
-    checkIndex = inY;
-    adjustmentI = -1;
-  }
-  for(let i = checkIndex + adjustmentI;i >= 0;i--){
-    if(direction === "up"){
-      stoneBackgColor = getComputedStyle(inStoneData[i * 8 + inY]).backgroundColor;
-    } else if (direction === "left") {
-      stoneBackgColor = getComputedStyle(inStoneData[inX * 8 + i]).backgroundColor;
-    }
-    if(stoneBackgColor === opponentSotne){
-      count++;
-    } else if(stoneBackgColor === mySotne && count >= 1){
-      isReversed = true;
-      break;
-    }  else if(stoneBackgColor === noValidCellColor || i === 0){
-      count = 0;
-      break;
-    } else{
-      break;
-    }
-  }
-
-  if(isReversed === true && count >= 1){
-    for(let i = checkIndex - 1 ;i >= checkIndex - count;i-- ){
-      if(direction === "up"){
-        inStoneData[i * 8 + inY].style.background = mySotne;
-      } else if (direction === "left") {
-        inStoneData[inX * 8 + i].style.background = mySotne;
-      }
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
 
 function leftReversed(inStoneData,inX,inY){
   let count = 0;
@@ -131,9 +70,6 @@ function leftReversed(inStoneData,inX,inY){
       count++;
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
-      break;
-    }  else if(stoneBackgColor === noValidCellColor || i === 0){
-      count = 0;
       break;
     } else{
       break;
@@ -155,9 +91,6 @@ function rightReversed(inStoneData,inX,inY){
       count++;
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
-      break;
-    }  else if(stoneBackgColor === noValidCellColor || i === 0){
-      count = 0;
       break;
     } else{
       break;
@@ -181,9 +114,6 @@ function downReversed(inStoneData,inX,inY){
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
       break;
-    }  else if(stoneBackgColor === noValidCellColor || i === 0){
-      count = 0;
-      break;
     } else{
       break;
     }
@@ -204,9 +134,6 @@ function upReversed(inStoneData,inX,inY){
       count++;
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
-      break;
-    }  else if(stoneBackgColor === noValidCellColor || i === 0){
-      count = 0;
       break;
     } else{
       break;
@@ -230,9 +157,6 @@ function leftUpReversed(inStoneData,inX,inY){
       count++;
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
-      break;
-    }  else if(stoneBackgColor === noValidCellColor || checkingX === 0 || checkingY === 0){
-      count = 0;
       break;
     } else{
       break;
@@ -264,9 +188,6 @@ function rightUpReversed(inStoneData,inX,inY){
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
       break;
-    }  else if(stoneBackgColor === noValidCellColor || checkingX === 0 || checkingY === 0){
-      count = 0;
-      break;
     } else{
       break;
     }
@@ -295,9 +216,6 @@ function leftDownReversed(inStoneData,inX,inY){
       count++;
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
-      break;
-    }  else if(stoneBackgColor === noValidCellColor || checkingX === 0 || checkingY === 0){
-      count = 0;
       break;
     } else{
       break;
@@ -328,9 +246,6 @@ function rightDownReversed(inStoneData,inX,inY){
     } else if(stoneBackgColor === mySotne && count >= 1){
       isReversed = true;
       break;
-    }  else if(stoneBackgColor === noValidCellColor || checkingX === 0 || checkingY === 0){
-      count = 0;
-      break;
     } else{
       break;
     }
@@ -349,19 +264,41 @@ function rightDownReversed(inStoneData,inX,inY){
 }
 
 function resetEmptyCellColor(inCellData,inStoneData){
-  for (let i = 0; i <= 7; i++){
-    for (let j = 0; j <= 7; j++){
-      if(inCellData[i * 8 + j].style.background === validCellColor){
-        inCellData[i * 8 + j].style.background = noValidCellColor;
-      }
-      if(inStoneData[i * 8 + j].style.background === validCellColor){
-        inStoneData[i * 8 + j].style.background = noValidCellColor;
-      }
+  inCellData.forEach((cell) =>{
+    if(cell.style.background === validCellColor){
+      cell.style.background = noValidCellColor;
     }
-  }
+  })
+  inStoneData.forEach((stone) =>{
+    if(stone.style.background === validCellColor){
+      stone.style.background = noValidCellColor;
+    }
+  })
 }
 
 /////おける場所チェック
+
+function mappingTheBoard(stoneAllData){
+  const result = [];
+  let  stoneColumnAry = [];
+  let  stoneCount = 0;
+  for (const stone of stoneAllData){
+    const selectedStoneColor = getComputedStyle(stone).backgroundColor;
+    if(selectedStoneColor === white){
+      stoneColumnAry.push(1);
+    } else if (selectedStoneColor === black){
+      stoneColumnAry.push(2);
+    } else {
+      stoneColumnAry.push(0);
+    }
+    if(stoneCount % 8 === 7){
+      result.push(stoneColumnAry);
+      stoneColumnAry = [];
+    }
+    stoneCount++;
+  }
+  return result; 
+}
 
 function leftReversedCheck(inItemData,inStoneData,inX,inY){
   let count = 0;
@@ -540,84 +477,85 @@ function leftDownReversedCheck(inItemData,inStoneData,inX,inY){
   }
 }
 
+function oneMoreTurnCheck(inTrunChangeCount,inStoneAry,inCellData,inStoneData,inTurnData){
+
+  if(inTrunChangeCount === 64){
+    document.body.getElementsByClassName("oneMore")[0].style.visibility = "visible";
+    if(mySotne === white){
+      mySotne = black;
+      opponentSotne = white;
+      inTurnData[0].style.background = black;
+      inTurnData[0].style.color = white;
+    } else {
+      mySotne = white;
+      opponentSotne = black;
+      inTurnData[0].style.background = white;
+      inTurnData[0].style.color = black;
+    }
+    inStoneAry.forEach((column,i) => column.forEach((cell,j) => {
+      if(cell === 3){
+        console.log("in");
+        leftReversedCheck(inCellData,inStoneData,i,j);
+        rightReversedCheck(inCellData,inStoneData,i,j);
+        upReversedCheck(inCellData,inStoneData,i,j);
+        downReversedCheck(inCellData,inStoneData,i,j);
+        leftUpReversedCheck(inCellData,inStoneData,i,j);
+        rightUpReversedCheck(inCellData,inStoneData,i,j);
+        leftDownReversedCheck(inCellData,inStoneData,i,j);
+        rightDownReversedCheck(inCellData,inStoneData,i,j);
+      }
+    }))
+    
+  }
+}
+
 function clickDisplayAlert(x, y) {
   const cell = x * 8 + y;
   const stoneData = document.querySelectorAll(".stone");
   const cellData = document.querySelectorAll(".cell");
 
-
   document.body.getElementsByClassName("oneMore")[0].style.visibility = "hidden";
 
   if(stoneData[cell].style.background === validCellColor){
-    const stoneAry =[];
     turnCount++;
     stoneData[cell].style.background = mySotne;
     stoneData[cell].style.border = blackBorder;
 
-
-    //ひっくり返す関数追加
-    leftOrUpReversed(stoneData,"up",x,y);
-    leftOrUpReversed(stoneData,"left",x,y);
-//    leftReversed(stoneData,x,y);
+    //ひっくり返す
+    leftReversed(stoneData,x,y);
+    upReversed(stoneData,x,y);
     rightReversed(stoneData,x,y);
-//    upReversed(stoneData,x,y);
     downReversed(stoneData,x,y);
     leftUpReversed(stoneData,x,y);
     rightUpReversed(stoneData,x,y);
     leftDownReversed(stoneData,x,y);
     rightDownReversed(stoneData,x,y);
 
-
-    let  stoneColumnAry = [];
-    let  stoneCount = 0;
-    for (const stone of stoneData){
-      const selectedStoneColor = getComputedStyle(stone).backgroundColor;
-      if(selectedStoneColor === white){
-        stoneColumnAry.push(1);
-      } else if (selectedStoneColor === black){
-        stoneColumnAry.push(2);
-      } else {
-        stoneColumnAry.push(0);
-      }
-      if(stoneCount % 8 === 7){
-        stoneAry.push(stoneColumnAry);
-        stoneColumnAry = [];
-      }
-      stoneCount++;
-    }
-
-
-    resetEmptyCellColor(cellData,stoneData)
+    const stoneAry = mappingTheBoard(stoneData);
+    resetEmptyCellColor(cellData,stoneData);
     
-
-    
-    const adjustColumnCoordAry = [-1, -1, -1,  0, 0,  1, 1, 1];
-    const adjustRowCoordAry =    [-1,  0, 1, -1, 1, -1, 0, 1];
-    for (let i = 0; i <= 7; i++){
-      for (let j = 0; j <= 7; j++){
-        if(stoneAry[i][j] === 0){
-          for (let k = 0; k <= 7; k++){
-            if(
-              i + adjustColumnCoordAry[k] >= 0 &&
-              i + adjustColumnCoordAry[k] <= 7 &&
-              j + adjustRowCoordAry[k] >= 0 &&
-              j + adjustRowCoordAry[k] <= 7
-              ){
-                if(
-                  stoneAry[i + adjustColumnCoordAry[k]][j + adjustRowCoordAry[k]] === 1 || 
-                  stoneAry[i + adjustColumnCoordAry[k]][j + adjustRowCoordAry[k]] === 2
-                  ){
-                    stoneAry[i][j] = 3;
-                    break;
-                }
-            }
+    stoneAry.forEach((column,i) => column.forEach((cell,j) => {
+      if(cell === 0){
+        for (let k = 0; k <= 7; k++){
+          if(
+            i + adjustColumnCoordAry[k] >= 0 &&
+            i + adjustColumnCoordAry[k] <= 7 &&
+            j + adjustRowCoordAry[k] >= 0 &&
+            j + adjustRowCoordAry[k] <= 7
+            ){
+              if(
+                stoneAry[i + adjustColumnCoordAry[k]][j + adjustRowCoordAry[k]] === 1 || 
+                stoneAry[i + adjustColumnCoordAry[k]][j + adjustRowCoordAry[k]] === 2
+                ){
+                  stoneAry[i][j] = 3;
+                  break;
+              }
           }
         }
       }
-    }
+    }))
 
     const turnData = document.querySelectorAll(".turn");
-
 
     if(mySotne === white){
       mySotne = black;
@@ -631,76 +569,37 @@ function clickDisplayAlert(x, y) {
       turnData[0].style.color = black;
     }
 
-
-
-
-
-
-    for (let i = 0; i <= 7; i++){
-      for (let j = 0; j <= 7; j++){
-        if(stoneAry[i][j] === 3){
-          leftReversedCheck(cellData,stoneData,i,j);
-          rightReversedCheck(cellData,stoneData,i,j);
-          upReversedCheck(cellData,stoneData,i,j);
-          downReversedCheck(cellData,stoneData,i,j);
-          leftUpReversedCheck(cellData,stoneData,i,j);
-          rightUpReversedCheck(cellData,stoneData,i,j);
-          leftDownReversedCheck(cellData,stoneData,i,j);
-          rightDownReversedCheck(cellData,stoneData,i,j);
-        }
+    stoneAry.forEach((column,i) => column.forEach((cell,j) => {
+      if(cell === 3){
+        leftReversedCheck(cellData,stoneData,i,j);
+        rightReversedCheck(cellData,stoneData,i,j);
+        upReversedCheck(cellData,stoneData,i,j);
+        downReversedCheck(cellData,stoneData,i,j);
+        leftUpReversedCheck(cellData,stoneData,i,j);
+        rightUpReversedCheck(cellData,stoneData,i,j);
+        leftDownReversedCheck(cellData,stoneData,i,j);
+        rightDownReversedCheck(cellData,stoneData,i,j);
       }
-    }
-
-
+    }))
     
     let trunChangeCount = 0;
-    for(const cell of cellData){
+    cellData.forEach((cell) => {
       if(getComputedStyle(cell).backgroundColor === noValidCellColor){
         trunChangeCount++;
       }
-    }
-    if(trunChangeCount === 64){
-      
-      document.body.getElementsByClassName("oneMore")[0].style.visibility = "visible";
-      if(mySotne === white){
-        mySotne = black;
-        opponentSotne = white;
-        turnData[0].style.background = black;
-        turnData[0].style.color = white;
-      } else {
-        mySotne = white;
-        opponentSotne = black;
-        turnData[0].style.background = white;
-        turnData[0].style.color = black;
-      }
-      for (let i = 0; i <= 7; i++){
-        for (let j = 0; j <= 7; j++){
-          if(stoneAry[i][j] === 3){
-            leftReversedCheck(cellData,stoneData,i,j);
-            rightReversedCheck(cellData,stoneData,i,j);
-            upReversedCheck(cellData,stoneData,i,j);
-            downReversedCheck(cellData,stoneData,i,j);
-            leftUpReversedCheck(cellData,stoneData,i,j);
-            rightUpReversedCheck(cellData,stoneData,i,j);
-            leftDownReversedCheck(cellData,stoneData,i,j);
-            rightDownReversedCheck(cellData,stoneData,i,j);
-          }
-        }
-      }
-    }
+    });
 
+    oneMoreTurnCheck(trunChangeCount,stoneAry,cellData,stoneData,turnData);
 
     let whiteCount = 0;
     let blackCount = 0;
-    for (let i = 0; i <= 7; i++){
-      for (let j = 0; j <= 7; j++){
-        if(stoneAry[i][j] === 1){
-          whiteCount++;
-        } else if(stoneAry[i][j] === 2){
-          blackCount++;
-        }
+    stoneAry.forEach((column,i) => column.forEach((cell,j) => {
+      if(cell === 1){
+        whiteCount++;
+      } else if(stoneAry[i][j] === 2){
+        blackCount++;
       }
-    }
+    }))
 
     if(turnCount === 60 || whiteCount === 0 || blackCount === 0){
       document.body.getElementsByClassName("oneMore")[0].style.visibility = "hidden";
@@ -716,10 +615,8 @@ function clickDisplayAlert(x, y) {
       window.setTimeout(function(){
         window.alert(`○白 : ${whiteCount}  ●黒 : ${blackCount}\n\n結果 : ${OthelloResult}`)
       },200);
-
     }
   }  
-
 }
 
 function reset(){
@@ -730,33 +627,25 @@ function reset(){
   const stoneData = document.querySelectorAll(".stone");
   document.body.getElementsByClassName("oneMore")[0].style.visibility = "hidden";
 
-
-  for(let i = 0; i <= 7; i++ ){
-    for(let j = 0; j <= 7; j++ ){
-      const cell = i * 8 + j;
-      const stoneData = document.querySelectorAll(".stone");
-      if(cell === 27 ||cell === 36){
-        stoneData[cell].style.background = white;
-        stoneData[cell].style.border = blackBorder;
-      }else if (cell === 28 ||cell === 35){
-        stoneData[cell].style.background = black;
-        stoneData[cell].style.border = blackBorder;
-      } else {
-        stoneData[cell].style.background = noValidCellColor;
-        cellData[cell].style.background = noValidCellColor;
-        stoneData[cell].style.border = "0px";
-      }
-  
+  stoneData.forEach((stone,index) => {
+    if(index === 27 ||index === 36){
+      stone.style.background = white;
+      stone.style.border = blackBorder;
+    }else if (index === 28 ||index === 35){
+      stone.style.background = black;
+      stone.style.border = blackBorder;
+    } else {
+      stone.style.background = noValidCellColor;
+      cellData[index].style.background = noValidCellColor;
+      stone.style.border = "0px";
     }
-  }
-  const validCellAry = [20, 29, 34, 43];
-  for(const cell of validCellAry){
-    cellData[cell].style.background = validCellColor;
-    stoneData[cell].style.background = validCellColor;
-  
-  }
+  })
 
-  
+  initValidCellAry.forEach((index) => {
+    cellData[index].style.background = validCellColor;
+    stoneData[index].style.background = validCellColor;
+  });
+
   const turnData = document.querySelectorAll(".turn")[0];
     turnData.style.background = white;
     turnData.style.color = black;
