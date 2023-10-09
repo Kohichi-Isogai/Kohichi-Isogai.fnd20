@@ -638,7 +638,7 @@ function clickDisplayAlert(x, y) {
       if(whiteCount > blackCount){
         OthelloResult = "○白の勝ち！！！";
       } else if(whiteCount < blackCount){
-        OthelloResult = "黒の勝ち！！！";
+        OthelloResult = "●黒の勝ち！！！";
       } else {
         OthelloResult = "引き分け！！！";
       }
